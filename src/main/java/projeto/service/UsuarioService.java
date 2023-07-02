@@ -1,7 +1,7 @@
-package br.edu.ifpb.gugawag.api.service;
+package projeto.service;
 
-import br.edu.ifpb.gugawag.api.model.Usuario;
-import br.edu.ifpb.gugawag.api.repositories.UsuarioRepository;
+import projeto.model.Usuario;
+import projeto.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

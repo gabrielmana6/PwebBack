@@ -1,7 +1,7 @@
-package br.edu.ifpb.gugawag.api.controller;
+package projeto.controller;
 
-import br.edu.ifpb.gugawag.api.model.Usuario;
-import br.edu.ifpb.gugawag.api.service.UsuarioService;
+import projeto.model.Usuario;
+import projeto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package br.edu.ifpb.gugawag.api.model;
+package projeto.model;
 
 import jakarta.persistence.*;
 
@@ -14,8 +14,6 @@ public class Usuario {
     private String nome;
     private int idade;
     private String cpf;
-    private String agencia;
-    private double saldo;
 
     public Long getId() {
         return id;
@@ -63,21 +61,5 @@ public class Usuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
     }
 }

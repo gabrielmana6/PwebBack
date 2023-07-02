@@ -1,4 +1,4 @@
-package br.edu.ifpb.gugawag.api;
+package projeto;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,4 +1,4 @@
-package br.edu.ifpb.gugawag.api;
+package projeto;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

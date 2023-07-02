@@ -1,6 +1,6 @@
-package br.edu.ifpb.gugawag.api.repositories;
+package projeto.repositories;
 
-import br.edu.ifpb.gugawag.api.model.Usuario;
+import projeto.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

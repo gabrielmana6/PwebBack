@@ -1,4 +1,4 @@
-package br.edu.ifpb.gugawag.api;
+package projeto;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
