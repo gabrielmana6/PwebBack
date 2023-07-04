@@ -24,14 +24,24 @@ public class ContaController {
         return this.contaService.getContaPorId(idConta);
     }
 
+    @GetMapping("/contas/cpf/{cpf}")
+    public Conta findByCpf(@PathVariable("cpf") String cpfConta) {
+        return this.contaService.findByCpf(cpfConta);
+    }
+
     @PostMapping("/contas")
     public Conta inserirConta(@RequestBody Conta conta) {
-        return this.contaService.inserirOuAtualizar(conta);
+        return this.contaService.inserir(conta);
     }
 
     @PutMapping("/contas/{id}")
     public Conta atualizarConta(@RequestBody Conta conta) {
-        return this.contaService.inserirOuAtualizar(conta);
+        return this.contaService.atualizar(conta);
+    }
+
+    @PutMapping("/contas/{id}/saldo")
+    public Conta depositar(@RequestBody Conta conta) {
+        return this.contaService.depositar(conta);
     }
 
     @DeleteMapping("/contas/{id}")

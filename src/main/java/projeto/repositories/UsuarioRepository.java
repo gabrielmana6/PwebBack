@@ -1,5 +1,7 @@
 package projeto.repositories;
 
+import org.springframework.data.repository.query.Param;
+import projeto.model.Conta;
 import projeto.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,8 +10,9 @@ import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    public List<Usuario> findByIdadeAndCpf(Integer idade, String cpf);
+    @Query("SELECT cpf FROM Usuario")
+    public List<String> getAllCpf();
 
-    @Query("SELECT u FROM Usuario u where u.idade>=60")
-    public List<Usuario> getUsuariosIdosos();
+    @Query("SELECT u.id FROM Usuario u WHERE u.cpf = :cpf")
+    public Long findIdByCpf(@Param("cpf") String cpf);
 }

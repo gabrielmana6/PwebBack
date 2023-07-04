@@ -9,9 +9,9 @@ import jakarta.persistence.*;
 public class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
-    private String agencia;
+
+    private String cpf;
     private BigDecimal saldo;
 
     public Long getId() {
@@ -22,19 +22,19 @@ public class Conta {
         this.id = id;
     }
 
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
     public BigDecimal getSaldo() {
         return saldo;
     }
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

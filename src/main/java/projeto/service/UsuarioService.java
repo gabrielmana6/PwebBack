@@ -23,11 +23,32 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario inserirOuAtualizar(Usuario usuario) {
-        Usuario usuarioInserido = this.usuarioRepository.save(usuario);
-        if (usuario.getIdade() < 18) {
-            throw new RuntimeException("Menor de idade não permitido");
+    public Usuario inserir(Usuario usuario) {
+        List<String> ListaCpf = this.usuarioRepository.getAllCpf();
+
+        for (String cpf : ListaCpf ) {
+            if(usuario.getCpf().equals(cpf)) {
+                throw new RuntimeException("CPF Existente");
+            }
         }
+        Usuario usuarioInserido = this.usuarioRepository.save(usuario);
+        return usuarioInserido;
+    }
+
+    @Transactional
+    public Usuario atualizar(Usuario usuario) {
+        System.out.println("user-------------------------------------------------------------------------------------------------");
+        List<String> ListaCpf = this.usuarioRepository.getAllCpf();
+        boolean contemCPF = ListaCpf.contains(usuario.getCpf());
+
+        if(contemCPF){
+            System.out.println("dentro do IFuser -------------------------------------------------------------------------------------------------");
+            final Long userId = this.usuarioRepository.findIdByCpf(usuario.getCpf());
+            if(!usuario.getId().equals(userId)) {
+                throw new RuntimeException("CPF Existente user");
+            }
+        }
+        Usuario usuarioInserido = this.usuarioRepository.save(usuario);
         return usuarioInserido;
     }
 
