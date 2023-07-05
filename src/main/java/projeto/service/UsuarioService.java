@@ -37,12 +37,10 @@ public class UsuarioService {
 
     @Transactional
     public Usuario atualizar(Usuario usuario) {
-        System.out.println("user-------------------------------------------------------------------------------------------------");
         List<String> ListaCpf = this.usuarioRepository.getAllCpf();
         boolean contemCPF = ListaCpf.contains(usuario.getCpf());
 
         if(contemCPF){
-            System.out.println("dentro do IFuser -------------------------------------------------------------------------------------------------");
             final Long userId = this.usuarioRepository.findIdByCpf(usuario.getCpf());
             if(!usuario.getId().equals(userId)) {
                 throw new RuntimeException("CPF Existente user");

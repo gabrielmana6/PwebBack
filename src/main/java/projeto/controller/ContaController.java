@@ -1,11 +1,13 @@
 package projeto.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import projeto.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import projeto.model.Conta;
+import projeto.model.Transferencia;
 
 @RestController
 @RequestMapping("/")
@@ -28,6 +30,12 @@ public class ContaController {
     public Conta findByCpf(@PathVariable("cpf") String cpfConta) {
         return this.contaService.findByCpf(cpfConta);
     }
+
+    @PutMapping("/contas/transferir")
+    public List<Conta> transferir(@RequestBody Transferencia transferencia) {
+        return this.contaService.transferir(transferencia.getContaOrigem(), transferencia.getContaDestino(), transferencia.getQuantia());
+    }
+
 
     @PostMapping("/contas")
     public Conta inserirConta(@RequestBody Conta conta) {

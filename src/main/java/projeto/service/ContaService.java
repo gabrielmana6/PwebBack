@@ -1,6 +1,7 @@
 package projeto.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -8,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import projeto.model.Conta;
-import projeto.model.Usuario;
 import projeto.repositories.ContaRepository;
+import java.math.BigDecimal;
 
 @Service
 public class ContaService {
@@ -44,15 +45,13 @@ public class ContaService {
 
     @Transactional
     public Conta atualizar(Conta conta) {
-        System.out.println("conta-------------------------------------------------------------------------------------------------");
         List<String> ListaCpf = this.contaRepository.getAllCpf();
         boolean contemCPF = ListaCpf.contains(conta.getCpf());
 
         if(contemCPF){
-            System.out.println("dentro do IFconta -------------------------------------------------------------------------------------------------");
             final Long contaId = this.contaRepository.findIdByCpf(conta.getCpf());
             if(!conta.getId().equals(contaId)) {
-                throw new RuntimeException("CPF Existente conta");
+                throw new RuntimeException("CPF Existente");
             }
         }
         Conta contaInserida = this.contaRepository.save(conta);
@@ -68,6 +67,34 @@ public class ContaService {
         Conta contaInserida = this.contaRepository.save(conta);
         return contaInserida;
     }
+
+    @Transactional
+    public List<Conta> transferir(Conta contaOrigem, Conta contaDestino, BigDecimal quantia) {
+        if (contaOrigem.getSaldo().compareTo(quantia) < 0) {
+            throw new RuntimeException("Você não possui saldo suficiente.");
+        } else {
+
+            System.out.println("----------------------------------------------------------------------------------------");
+            System.out.println("contaOrigemsaldo: " + contaOrigem.getSaldo());
+            System.out.println("contaDestinosaldo: " + contaOrigem.getSaldo());
+            //Operacao
+            contaOrigem.setSaldo(contaOrigem.getSaldo().subtract(quantia));
+            contaDestino.setSaldo(contaDestino.getSaldo().add(quantia));
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println("contaOrigemsaldo: " + contaOrigem.getSaldo());
+            System.out.println("contaDestinosaldo: " + contaOrigem.getSaldo());
+
+            Conta contaOrigemInserida = this.contaRepository.save(contaOrigem);
+            Conta contaDestinoInserida = this.contaRepository.save(contaDestino);
+
+            // Retorne as contas atualizadas
+            List<Conta> contasAtualizadas = new ArrayList<>();
+            contasAtualizadas.add(contaOrigemInserida);
+            contasAtualizadas.add(contaDestinoInserida);
+            return contasAtualizadas;
+        }
+    }
+
 
     public void apagar(Long id) {
         this.contaRepository.deleteById(id);
