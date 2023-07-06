@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import projeto.model.Conta;
 import projeto.repositories.ContaRepository;
-import java.math.BigDecimal;
 
 @Service
 public class ContaService {
