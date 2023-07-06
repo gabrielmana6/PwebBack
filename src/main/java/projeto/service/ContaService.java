@@ -48,41 +48,43 @@ public class ContaService {
         List<String> ListaCpf = this.contaRepository.getAllCpf();
         boolean contemCPF = ListaCpf.contains(conta.getCpf());
 
+        // Excecoes
         if(contemCPF){
             final Long contaId = this.contaRepository.findIdByCpf(conta.getCpf());
             if(!conta.getId().equals(contaId)) {
                 throw new RuntimeException("CPF Existente");
             }
         }
+
+        // Retorna a conta atualizada
         Conta contaInserida = this.contaRepository.save(conta);
         return contaInserida;
     }
 
     @Transactional
-    public Conta depositar(Conta conta){
+    public Conta depositar(Conta conta, BigDecimal quantia){
 
-        if(conta.getSaldo().compareTo(BigDecimal.ZERO) <= 0) {
+        // Excecoes
+        if(quantia.compareTo(BigDecimal.ZERO) <= 0) {
             throw new RuntimeException("Deposite uma quantia maior que zero");
         }
+        // Operacao
+        conta.setSaldo(conta.getSaldo().add(quantia));
+
+        // Retorna a conta atualizada
         Conta contaInserida = this.contaRepository.save(conta);
         return contaInserida;
     }
 
     @Transactional
     public List<Conta> transferir(Conta contaOrigem, Conta contaDestino, BigDecimal quantia) {
+        // Excecoes
         if (contaOrigem.getSaldo().compareTo(quantia) < 0) {
             throw new RuntimeException("Você não possui saldo suficiente.");
         } else {
-
-            System.out.println("----------------------------------------------------------------------------------------");
-            System.out.println("contaOrigemsaldo: " + contaOrigem.getSaldo());
-            System.out.println("contaDestinosaldo: " + contaOrigem.getSaldo());
-            //Operacao
+            // Operacao
             contaOrigem.setSaldo(contaOrigem.getSaldo().subtract(quantia));
             contaDestino.setSaldo(contaDestino.getSaldo().add(quantia));
-            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println("contaOrigemsaldo: " + contaOrigem.getSaldo());
-            System.out.println("contaDestinosaldo: " + contaOrigem.getSaldo());
 
             Conta contaOrigemInserida = this.contaRepository.save(contaOrigem);
             Conta contaDestinoInserida = this.contaRepository.save(contaDestino);

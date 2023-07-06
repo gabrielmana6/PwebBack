@@ -2,6 +2,8 @@ package projeto.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import projeto.model.Deposito;
 import projeto.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +33,6 @@ public class ContaController {
         return this.contaService.findByCpf(cpfConta);
     }
 
-    @PutMapping("/contas/transferir")
-    public List<Conta> transferir(@RequestBody Transferencia transferencia) {
-        return this.contaService.transferir(transferencia.getContaOrigem(), transferencia.getContaDestino(), transferencia.getQuantia());
-    }
-
-
     @PostMapping("/contas")
     public Conta inserirConta(@RequestBody Conta conta) {
         return this.contaService.inserir(conta);
@@ -47,9 +43,14 @@ public class ContaController {
         return this.contaService.atualizar(conta);
     }
 
-    @PutMapping("/contas/{id}/saldo")
-    public Conta depositar(@RequestBody Conta conta) {
-        return this.contaService.depositar(conta);
+    @PutMapping("/contas/depositar")
+    public Conta depositar(@RequestBody Deposito deposito) {
+        return this.contaService.depositar(deposito.getConta(), deposito.getQuantia());
+    }
+
+    @PutMapping("/contas/transferir")
+    public List<Conta> transferir(@RequestBody Transferencia transferencia) {
+        return this.contaService.transferir(transferencia.getContaOrigem(), transferencia.getContaDestino(), transferencia.getQuantia());
     }
 
     @DeleteMapping("/contas/{id}")
