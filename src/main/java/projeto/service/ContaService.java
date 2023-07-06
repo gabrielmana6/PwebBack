@@ -76,6 +76,24 @@ public class ContaService {
     }
 
     @Transactional
+    public Conta sacar(Conta conta, BigDecimal quantia) {
+
+        // Excecoes
+        if(quantia.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Saque uma quantia maior que zero");
+        } else if(conta.getSaldo().compareTo(quantia)< 0) {
+            throw new RuntimeException("Você não possui saldo suficiente.");
+        }
+
+        // Operacao
+        conta.setSaldo(conta.getSaldo().subtract(quantia));
+
+        // Retorna a conta atualizada
+        Conta contaInserida = this.contaRepository.save(conta);
+        return contaInserida;
+    }
+
+    @Transactional
     public List<Conta> transferir(Conta contaOrigem, Conta contaDestino, BigDecimal quantia) {
         // Excecoes
         if (contaOrigem.getSaldo().compareTo(quantia) < 0) {

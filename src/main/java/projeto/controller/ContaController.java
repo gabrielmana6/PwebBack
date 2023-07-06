@@ -3,6 +3,7 @@ package projeto.controller;
 import java.util.List;
 
 import projeto.model.Deposito;
+import projeto.model.Saque;
 import projeto.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,11 @@ public class ContaController {
     @PutMapping("/contas/depositar")
     public Conta depositar(@RequestBody Deposito deposito) {
         return this.contaService.depositar(deposito.getConta(), deposito.getQuantia());
+    }
+
+    @PutMapping("/contas/sacar")
+    public Conta sacar(@RequestBody Saque saque) {
+        return this.contaService.sacar(saque.getConta(), saque.getQuantia());
     }
 
     @PutMapping("/contas/transferir")
